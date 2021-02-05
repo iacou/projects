@@ -1,0 +1,23 @@
+# Default values for api.
+
+replicaCount: 1
+
+image:
+  # local repo for kind
+  repo: localhost:5000
+  pullPolicy: IfNotPresent
+  tag: latest
+
+colours:
+  - name: red
+    ingressEnabled: true
+  - name: green
+    ingressEnabled: true
+  - name: blue
+    ingressEnabled: true
+
+podAnnotations: {}
+
+service:
+  type: ClusterIP
+  port: 80

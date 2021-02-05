@@ -1,0 +1,18 @@
+{{- range $colour := .Values.colours }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "api.fullname" $ }}-{{ $colour.name }}
+  labels:
+    {{- include "api.labels" $ | nindent 4 }}
+spec:
+  type: {{ $.Values.service.type }}
+  ports:
+    - port: {{ $.Values.service.port }}
+      targetPort: 5001
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "api.selectorLabels" $ | nindent 4 }}-{{ $colour.name }}
+---
+{{- end }}

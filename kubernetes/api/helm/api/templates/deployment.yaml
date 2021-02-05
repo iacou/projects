@@ -1,0 +1,40 @@
+
+{{- range $colour := .Values.colours }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "api.fullname" $ }}-{{ $colour.name }}
+  labels:
+    {{- include "api.labels" $ | nindent 4 }}}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "api.fullname" $ }}-{{ $colour.name }}
+  template:
+    metadata:
+      labels:
+        {{- include "api.selectorLabels" $ | nindent 8 }}-{{ $colour.name }}
+        app: {{ include "api.fullname" $ }}-{{ $colour.name }}
+    spec:
+      containers:
+        - name: {{ include "api.fullname" $ }}-{{ $colour.name }}
+          image: {{ $.Values.image.repo }}/api:{{ $.Values.image.tag }}
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 5001
+              protocol: TCP
+          env:
+            - name: COLOUR
+              value: {{ $colour.name }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          readinessProbe:
+              httpGet:
+                path: /healthz
+                port: 5001
+                port: http
+---
+{{- end }}
