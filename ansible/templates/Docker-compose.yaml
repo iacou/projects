@@ -1,0 +1,7 @@
+version: '2'
+services:
+  server01:
+    image: debian-ed
+    ports:
+      - "{{ port }}:22"
+

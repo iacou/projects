@@ -1,9 +1,11 @@
 ---
-- name: Install VC,redist.x64,amd64,14.28,bundle
-  hosts: server01
+- name: create file
+  hosts: '*'
   tasks:
-  - name: Install VC,redist.x64,amd64,14.28,bundle
-    ansible.windows.win_package:
-      path: https://aka.ms/vs/16/release/vc_redist.x64.exe
-      product_id: '{33628a12-6787-4b9f-95a1-92449f69fae0}'
-      arguments: /install /passive /norestart
+  - name: Change file ownership, group and permissions
+    ansible.builtin.file:
+      path: /etc/foo.conf
+      state: touch
+      mode: u=rw,g=r,o=r
+      access_time: preserve
+      modification_time: preserve

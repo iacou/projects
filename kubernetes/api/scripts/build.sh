@@ -6,7 +6,7 @@ me=`basename "$0"`
 # see: https://kind.sigs.k8s.io/docs/user/local-registry/
 REGISTRY="localhost:5000"
 
-docker build $SCRIPTPATH/.. -t $REGISTRY/api:latest
+docker build $SCRIPTPATH/../service -t $REGISTRY/api:latest
 docker push $REGISTRY/api:latest
 
 echo "$me DONE"

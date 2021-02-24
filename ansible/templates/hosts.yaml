@@ -1,0 +1,9 @@
+docker:
+  hosts:
+    localhost.{{ port }}:
+      ansible_port: {{ port }}
+  vars:
+    ansible_user: root
+    ansible_host: localhost
+    UserKnownHostsFile: /dev/null
+    StrictHostKeyChecking: no
