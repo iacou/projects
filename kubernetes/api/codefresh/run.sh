@@ -8,9 +8,8 @@ me=`basename "$0"`
 
 codefresh run colourapi/colourapi \
     --local \
-    -b master \
+    -b codefresh \
     --variable-file $SCRIPTPATH/localvars.yaml \
-    --yaml=$SCRIPTPATH/codefresh.yaml \
-    -lv
+    --yaml=$SCRIPTPATH/codefresh.yaml
 
 echo "$me DONE"

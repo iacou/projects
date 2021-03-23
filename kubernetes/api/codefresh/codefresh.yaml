@@ -43,27 +43,23 @@ steps:
     title: Storing Helm Chart
     type: helm
     stage: store
+    working_directory: "${{clone}}/kubernetes"
     arguments:
       action: push
       helm_version: 3.2.3
-      chart_name: /kubernetes/api/helm/charts
+      chart_name: "api/helm/charts"
       chart_repo_url: 'cm://h.cfcr.io/iacou.eu/default'
       chart_version: '0.1.${{CF_BUILD_ID}}'
 
-  # deployChart:
-  #   type: helm
-  #   stage: deploy
-  #   working_directory: ./python-flask-sample-app
-  #   arguments:
-  #     action: install
-  #     helm_version: 3.2.3
-  #     chart_name: charts/colourapi
-  #     release_name: colourapi
-  #     helm_version: 3.0.2
-  #     chart_version: '0.1.${{CF_BUILD_ID}}'
-  #     kube_context: iacou@colourapi
-  #     custom_values:
-  #       - 'buildID=${{CF_BUILD_ID}}'
-  #       - 'image_pullPolicy=Always'
-  #       - 'image_tag=master'
-  #       - 'image_pullSecret=codefresh-generated-r.cfcr.io-cfcr
+  deployChart:
+    type: helm
+    stage: deploy
+    arguments:
+      action: install
+      helm_version: 3.2.3
+      chart_name: "api"
+      release_name: colourapi
+      chart_version: '0.1.${{CF_BUILD_ID}}'
+      kube_context: iacou@colourapi
+      custom_values:
+        - 'image_tag=${{CF_BRANCH_TAG_NORMALIZED}}'
