@@ -60,4 +60,4 @@ steps:
       release_name: colourapi
       kube_context: iacou@colourapi
       custom_values:
-        - 'image_tag=${{CF_BRANCH_TAG_NORMALIZED}}'
+        - 'image_tag=${{CF_SHORT_REVISION}}'

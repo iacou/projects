@@ -10,7 +10,7 @@ print("deployment colour: %s" % colour)
 
 response = {
     'deployment': colour,
-    'pod': pod
+    'pod': pod,
     'ha' : 'funny'
 }
 
