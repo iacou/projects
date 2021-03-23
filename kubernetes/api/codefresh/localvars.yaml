@@ -2,3 +2,4 @@
 - CF_BRANCH: codefresh
   CF_BRANCH_TAG_NORMALIZED: codefresh
   CF_BUILD_ID: 1
+  CF_SHORT_REVISION

@@ -26,7 +26,7 @@ steps:
     type: "build"
     image_name: "api"
     working_directory: "${{clone}}/kubernetes/api/service"
-    tag: "${{CF_BRANCH_TAG_NORMALIZED}}"
+    tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
     dockerfile: "Dockerfile"
     stage: "build"
 
@@ -60,4 +60,4 @@ steps:
       release_name: colourapi
       kube_context: iacou@colourapi
       custom_values:
-        - 'image_tag=${{CF_SHORT_REVISION}}'
+        - 'image_tag=${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}'
