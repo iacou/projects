@@ -18,7 +18,7 @@ def health():
     return 'OK'
 
 # route to return deployment info.
-@app.route('/', methods=['GET'])
+@app.route('/deployment/%s' % colour, methods=['GET'])
 def api_all():
     return jsonify(response)
 

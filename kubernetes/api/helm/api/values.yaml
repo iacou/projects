@@ -3,9 +3,8 @@
 replicaCount: 1
 
 image:
-  # local repo for kind
-  repo: localhost:5000
-  pullPolicy: IfNotPresent
+  repo: gcr.io/colourapi
+  pullPolicy: Always
   tag: latest
 
 colours:
