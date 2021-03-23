@@ -3,4 +3,3 @@ name: api
 description: helm chart for installing colour api
 type: application
 version: 0.1.0
-appVersion: 1.16.0
