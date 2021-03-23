@@ -19,5 +19,5 @@ colours:
 podAnnotations: {}
 
 service:
-  type: ClusterIP
+  type: NodePort
   port: 80
