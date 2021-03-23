@@ -11,6 +11,7 @@ print("deployment colour: %s" % colour)
 response = {
     'deployment': colour,
     'pod': pod
+    'ha' : 'funny'
 }
 
 @app.route('/healthz', methods=['GET'])
