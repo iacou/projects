@@ -1,0 +1,69 @@
+# More examples of Codefresh YAML can be found at
+# https://codefresh.io/docs/docs/yaml-examples/examples/
+
+version: "1.0"
+# Stages can help you organize your steps in stages
+stages:
+  - "clone"
+  - "build"
+  #- "test"
+  - "store"
+  - "deploy"
+
+steps:
+  clone:
+    title: "Cloning repository"
+    type: "git-clone"
+    repo: "iacou/projects"
+    # CF_BRANCH value is auto set when pipeline is triggered
+    # Learn more at codefresh.io/docs/docs/codefresh-yaml/variables/
+    revision: "${{CF_BRANCH}}"
+    git: "github"
+    stage: "clone"
+
+  build:
+    title: "Building Docker image"
+    type: "build"
+    image_name: "api"
+    working_directory: "${{clone}}/kubernetes/api/service"
+    tag: "${{CF_BRANCH_TAG_NORMALIZED}}"
+    dockerfile: "Dockerfile"
+    stage: "build"
+
+  # test:
+  #   title: "Running test"
+  #   type: "freestyle" # Run any command
+  #   image: "ubuntu:latest" # The image in which command will be executed
+  #   working_directory: "${{clone}}" # Running command where code cloned
+  #   commands:
+  #     - "ls"
+  #   stage: "test"
+  
+  storeChart:
+    title: Storing Helm Chart
+    type: helm
+    stage: store
+    arguments:
+      action: push
+      helm_version: 3.2.3
+      chart_name: /kubernetes/api/helm/charts
+      chart_repo_url: 'cm://h.cfcr.io/iacou.eu/default'
+      chart_version: '0.1.${{CF_BUILD_ID}}'
+
+  # deployChart:
+  #   type: helm
+  #   stage: deploy
+  #   working_directory: ./python-flask-sample-app
+  #   arguments:
+  #     action: install
+  #     helm_version: 3.2.3
+  #     chart_name: charts/colourapi
+  #     release_name: colourapi
+  #     helm_version: 3.0.2
+  #     chart_version: '0.1.${{CF_BUILD_ID}}'
+  #     kube_context: iacou@colourapi
+  #     custom_values:
+  #       - 'buildID=${{CF_BUILD_ID}}'
+  #       - 'image_pullPolicy=Always'
+  #       - 'image_tag=master'
+  #       - 'image_pullSecret=codefresh-generated-r.cfcr.io-cfcr
