@@ -1,0 +1,28 @@
+{
+  "name": "tickerapi",
+  "version": "1.0.0",
+  "description": "tickerapi",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/EdJBlake/tickerapi.git"
+  },
+  "keywords": [
+    "ticker",
+    "api"
+  ],
+  "author": "EdJBlake",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/EdJBlake/tickerapi/issues"
+  },
+  "homepage": "https://gitlab.com/EdJBlake/tickerapi#README",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "request": "^2.88.0"
+  }
+}
