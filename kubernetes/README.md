@@ -1,4 +1,4 @@
-# deploy cluster and api helm chart
+# Deploy a GKE cluster, and a Helm chart for a basic colours API
 
 Create local cluster
 
