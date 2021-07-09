@@ -1,4 +1,4 @@
-# Deploy a GKE cluster, and a Helm chart for a basic colours API
+# Deploy a GKE cluster, build and deploy a Helm chart for a basic API (Codefresh for CICD)
 
 Create local cluster
 
