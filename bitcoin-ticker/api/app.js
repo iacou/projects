@@ -8,6 +8,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 (function getLatestPrices() {
+    process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
     var price = request('https://api.coindesk.com/v1/bpi/currentprice.json', { json: true }, (err, res, body) => {
     if (!err && res.statusCode == 200 && body.bpi.USD.rate_float) 
     {

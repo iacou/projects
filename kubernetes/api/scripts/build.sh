@@ -4,7 +4,7 @@ me=`basename "$0"`
 
 # tag image with local image tag for use by kind
 # see: https://kind.sigs.k8s.io/docs/user/local-registry/
-REGISTRY="gcr.io/colourapi"
+REGISTRY="localhost:5000"
 
 docker build $SCRIPTPATH/../service -t $REGISTRY/api:latest
 docker push $REGISTRY/api:latest

@@ -3,7 +3,7 @@
 replicaCount: 1
 
 image:
-  repo: gcr.io/colourapi
+  repo: localhost:5000
   pullPolicy: Always
   tag: latest
 

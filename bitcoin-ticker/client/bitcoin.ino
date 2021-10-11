@@ -3,7 +3,7 @@
 #include <WiFiClient.h>
 #include <EEPROM.h>
 #include <ESP8266WebServer.h>
-#include <Segment7Display.h>
+#include <Segment7Display.h> // library source unknown
 #include <ESP8266mDNS.h>        // Include the mDNS library
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>
@@ -52,8 +52,9 @@ void loop() {
     if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
       time_now = millis();
       firstRequest = false;
+      WiFiClient wifiClient;
       HTTPClient http;  //Declare an object of class HTTPClient
-      http.begin("http://api.tickerboxx.com/api/v1/btc");  //Specify request destination
+      http.begin(wifiClient, "http://api.tickerboxx.com/api/v1/btc");  //Specify request destination
       int httpCode = http.GET();
       if (EEPROM.read(96) != 0) {
         currency = "";
@@ -72,7 +73,6 @@ void loop() {
         float BTCUSD = root["BTCUSD"];
         float BTCGBP = root["BTCGBP"];
         float BTCEUR = root["BTCEUR"];
-        float CORONAUKCONFIRMED = root["CORONAUKCONFIRMED"];
         float price = BTCUSD;
         if (currency == "GBP")
         {
@@ -82,12 +82,9 @@ void loop() {
         {
           price = BTCEUR;
         }
-        if (currency == "COR")
-        {
-          price = CORONAUKCONFIRMED;
-        }
         Serial.println(currency);        
         Serial.println(price);
+        display.setBrightness(0);
         display.printFloat(price,0);
       }
       http.end();   //Close connection
@@ -189,7 +186,7 @@ void startWebServer() {
       String s = "<h1 style=\"color:#40414B;font-size:40px;font-family:Verdana;\"> TICKERBOXX</h1>";
       s += "<p style=\"color:#40414B;font-size:20px;font-family:Verdana;\">Select display currency.</p>";
       s += "<form method=\"get\" action=\"/\"><select name=\"currency\">";
-      s += "<option value=\"USD\">USD</option><option value=\"GBP\">GBP</option><option value=\"EUR\">EUR</option><option value=\"COR\">COR</option>";
+      s += "<option value=\"USD\">USD</option><option value=\"GBP\">GBP</option><option value=\"EUR\">EUR</option>";
       s += "</select><input type=\"submit\"></form><p style=\"font-size:20px;font-family:Verdana;\"><a href=\"/reset\">Reset Wi-Fi Settings</a></p>";
       webServer.send(200, "text/html", makePage("TICKERBOXX", s));
       String currency = urlDecode(webServer.arg("currency"));
