@@ -20,20 +20,20 @@ stages:
         tags: |
           $(Build.BuildNumber)
 
-- stage: terraform
-  displayName: terraform
-  jobs:
-  - job: tfplan
-    displayName: terraform plan
-    steps:
-    - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
-      displayName: 'Use Terraform 1.0.8'
-      inputs:
-        terraformVersion: 1.0.8
-    - bash: |
-        terraform init
-        terraform plan
-      workingDirectory: $(Build.SourcesDirectory)/bitcoin-ticker/api/azure
+# - stage: terraform
+#   displayName: terraform
+#   jobs:
+#   - job: tfplan
+#     displayName: terraform plan
+#     steps:
+#     - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+#       displayName: 'Use Terraform 1.0.8'
+#       inputs:
+#         terraformVersion: 1.0.8
+#     - bash: |
+#         terraform init
+#         terraform plan
+#       workingDirectory: $(Build.SourcesDirectory)/bitcoin-ticker/api/azure
 
 #   - job: tfapply
 #     displayName: terraform apply
