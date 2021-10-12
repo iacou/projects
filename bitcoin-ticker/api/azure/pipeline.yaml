@@ -1,2 +1,50 @@
+variables:
+  dockerRegistryServiceConnection: tickerboxx_acr
+  imageRepository: tickerboxx
+  dockerfilePath: $(Build.SourcesDirectory)/bitcoin-ticker/api
+
 stages:
-    - stage: 
+- stage: build&push
+  displayName: build and push
+  jobs:
+  - job: build
+    displayName: build and push docker image
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(Build.BuildNumber)
+
+- stage: terraform
+  displayName: terraform
+  jobs:
+  - job: tfplan
+    displayName: terraform plan
+    steps:
+    - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+      displayName: 'Use Terraform 1.0.8'
+      inputs:
+        terraformVersion: 1.0.8
+    - bash: |
+        terraform init
+        terraform plan
+      workingDirectory: $(Build.SourcesDirectory)/bitcoin-ticker/api/azure
+
+#   - job: tfapply
+#     displayName: terraform apply
+#     steps:
+#     - bash: |
+#         terraform apply
+#       workingDirectory: $(Build.SourcesDirectory)/bitcoin-ticker/api/azure
+
+# - stage: deploy
+#   displayName: deploy azure app
+
+
+
+
+
