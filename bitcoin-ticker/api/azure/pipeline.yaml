@@ -4,7 +4,7 @@ variables:
   dockerfilePath: $(Build.SourcesDirectory)/bitcoin-ticker/api
 
 stages:
-- stage: build&push
+- stage: buildAndPush
   displayName: build and push
   jobs:
   - job: build
