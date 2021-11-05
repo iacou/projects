@@ -54,7 +54,7 @@ void loop() {
       firstRequest = false;
       WiFiClient wifiClient;
       HTTPClient http;  //Declare an object of class HTTPClient
-      http.begin(wifiClient, "http://api.tickerboxx.com/api/v1/btc");  //Specify request destination
+      http.begin(wifiClient, "https://tickerboxx-api.herokuapp.com/api/v1/btc");  //Specify request destination
       int httpCode = http.GET();
       if (EEPROM.read(96) != 0) {
         currency = "";
