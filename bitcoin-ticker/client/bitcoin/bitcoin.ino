@@ -54,7 +54,9 @@ void loop() {
       firstRequest = false;
       WiFiClient wifiClient;
       HTTPClient http;  //Declare an object of class HTTPClient
-      http.begin(wifiClient, "http://tickerboxx-api.herokuapp.com/api/v1/btc");  //Specify request destination
+      http.begin(wifiClient, "http://api.coindesk.com/v1/bpi/currentprice.json");  //Specify request destination
+      http.addHeader("Content-Type", "application/json");
+
       int httpCode = http.GET();
       if (EEPROM.read(96) != 0) {
         currency = "";
@@ -64,15 +66,22 @@ void loop() {
         Serial.println("currency from eprom: ");
         Serial.println(currency);
       }
-   
+
+      Serial.println(httpCode);
+
       if (httpCode > 0) { //Check the returning code
+
+
    
-        const size_t bufferSize = JSON_OBJECT_SIZE(1) + 30;
+        const size_t bufferSize = JSON_OBJECT_SIZE(1) + 30000;
         DynamicJsonBuffer jsonBuffer(bufferSize);
+        String httpString = http.getString();
+        Serial.println(httpString);
         JsonObject& root = jsonBuffer.parseObject(http.getString());
-        float BTCUSD = root["BTCUSD"];
-        float BTCGBP = root["BTCGBP"];
-        float BTCEUR = root["BTCEUR"];
+
+        float BTCUSD = root["bpi"]["USD"]["rate_float"];
+        float BTCGBP = root["bpi"]["GBP"]["rate_float"];
+        float BTCEUR = root["bpi"]["EUR"]["rate_float"];
         float price = BTCUSD;
         if (currency == "GBP")
         {
@@ -82,6 +91,7 @@ void loop() {
         {
           price = BTCEUR;
         }
+        Serial.println(BTCUSD);        
         Serial.println(currency);        
         Serial.println(price);
         display.setBrightness(0);
